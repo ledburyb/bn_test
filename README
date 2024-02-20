@@ -1,0 +1,20 @@
+This is a small program to fetch a list of candidates and a list of job roles
+over a JSON API and produce matches.
+
+To run it you need to install the requirements in requirements.txt and run main.py.
+
+The way I approached this was to first think about how I'd develop it with more time available. I think the best approach would likely be to train some language models to recognise job titles and locations as well as determine
+whether these are locations the candidate is looking for or is looking to avoid so I've attempted a very simple
+version of this with no training. I used spaCy to do a small amount of NLP to try and extract locations and with more time I'd also like to train it to recognise job titles. I hadn't previously used this library so that took up a fair amount of the allocated time.
+
+The alternative approach would be to extract the set of all possible job titles from the available jobs and then try
+and match those back to the candidate bio but I think actually attempting to extract the roles from the candidate description is preferable because it means that if in future a new job appears with a different title you already have
+a set of possible candidates to immediately return.
+
+The scoring system I have gone with is probably the weakest aspect at the moment as it pretty naively just checks if there's both a matching job title and a matching location between the candidate and the job. This I would definitely want to improve in a real system, in particular I would like to build up a known set of job titles and aliases as often the same role can be described with multiple different titles.
+
+Another limitation of my text matching that I didn't have time to complete would be to add some stemming to make sure matches aren't rejected because of minor variations.
+
+Also because we're attempting to extract an actual location from the candidate with more information we could use a geolocation based search to return jobs that are close to their location and not just match on exact text.
+
+Obviously I would also want to include a lot more error handling and some unit tests in a real codebase.
